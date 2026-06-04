@@ -1,0 +1,113 @@
+---
+title: Style Guide
+description: Voice, structure, and formatting rules for the internal wiki.
+status: stable
+---
+
+# Style Guide <StatusBadge status="stable" />
+
+Rules for writing in this wiki. Internal voice; not customer documentation.
+
+## Voice
+
+1. **Terse beats polished.** This is internal. Half-finished thoughts marked `TBD` are better than unwritten pages.
+2. **Decision-oriented.** Every page describes a decision, a fact, or an open question. No marketing.
+3. **First person plural ("we") allowed.** Internal voice. ("We chose Postgres because..." not "The team chose Postgres because...")
+4. **No marketing adjectives.** Forbidden: "powerful," "seamless," "blazing," "revolutionary," "magical." Replace with concrete facts.
+
+## Structure
+
+5. **One H1 per page** — the page title. Never skip heading levels (H1 → H2 → H3, not H1 → H3).
+6. **Status-tag every page** in frontmatter (`stable` / `draft` / `stub` / `deprecated`) and inline next to the H1 with `<StatusBadge>`.
+7. **Open questions live at the bottom** of the relevant page **and** in [open-questions](/operations/open-questions). Cross-reference both directions.
+8. **Every concept page ends with a "→" links list** to logical follow-up pages.
+
+## Formatting
+
+9. **Mermaid for any flow with ≥3 steps.** Don't try to describe sequences in prose.
+10. **Code blocks always have a language tag.** Even for shell:
+    ````
+    ```bash
+    pnpm dev
+    ```
+    ````
+11. **Inline code for identifiers**: `<TaskStatus>`, `claim_expires_at`, `get_next_action`.
+12. **Tables for any 2-axis comparison.** Don't use bullet lists for tier comparisons or status matrices.
+13. **Cite sources** for outside claims. Inline markdown link.
+
+## Frontmatter
+
+Every MDX page starts with:
+
+```yaml
+---
+title: Page Title
+description: One-sentence summary, ≤160 chars.
+status: stable | draft | stub | deprecated
+tags: [optional, array, of, tags]
+---
+```
+
+Only `title` and `description` are required. `status` is strongly recommended. `tags` is rare.
+
+## Linking
+
+14. **Internal links use absolute paths**: `/product/overview`, not `../product/overview`. Easier to grep, refactor-safe.
+15. **External links** use full URLs and may have inline citation: `[Next.js docs](https://nextjs.org/docs)`.
+
+## ADRs
+
+ADRs follow a fixed template — see [ADR-0001](/decisions/0001-example-decision) and copy it:
+
+```
+# ADR-NNNN — Title
+
+<Decision id="NNNN" date="YYYY-MM-DD" status="accepted | proposed | superseded" />
+
+## Context
+## Decision
+## Consequences
+  ### Pros
+  ### Cons
+## Alternatives considered
+## Implementation
+## Status
+## Related
+```
+
+ADR numbering is zero-padded to 4 digits: `0001`, `0002`. Once an ADR is `accepted`, do not edit it without changing status to `superseded` and creating a new ADR that links to it. ADR numbers are immutable identifiers, not a contiguous sequence — gaps from deleted ADRs are fine.
+
+## Mermaid
+
+- Use `flowchart LR` (or `TB` for vertical) for components / dataflow.
+- Use `sequenceDiagram` for request flows.
+- Use `stateDiagram-v2` for lifecycle / state machines.
+- Keep node labels short; spell out in surrounding prose if needed.
+- Avoid colors / styles; let Nextra defaults render.
+
+### Gotchas (each of these has bitten this pattern before)
+
+These render as "Syntax error in text" in the browser. Build sometimes catches them; sometimes the build is clean and only the live render fails. Always reload the affected page after edits.
+
+| Pattern | Why it breaks | Fix |
+|---|---|---|
+| `<word>` HTML entities like `&lt;nonce&gt;` inside mermaid | Mermaid doesn't decode HTML entities — it sees the literal `&lt;` | Use plain `<word>` or substitute placeholder (`NONCE`) |
+| `;` inside a sequenceDiagram message label, e.g. `SM->>DB: atomic UPDATE; reject if claimed` | Mermaid treats `;` as a statement separator and ends the message early | Replace with `—`, `,`, or `+` |
+| Inline code with escaped backticks containing `<>` in MDX prose | The escaped backticks close the inline-code span; `<unit>` then gets parsed as JSX | Use a fenced code block instead |
+| Raw `<` in MDX prose outside code blocks, e.g. `<3 of 10` | MDX 3 sees `<3` as the start of a JSX tag | Use `\<3` (canonical MDX 3 escape — see [MDX troubleshooting](https://mdxjs.com/docs/troubleshooting-mdx/)) |
+| Colon inside a YAML frontmatter `description` value | YAML parser interprets it as a nested mapping | Quote the description value: `description: "Phased rollout — v1.5, v2"` |
+
+## What to NOT do
+
+- **Don't write tutorials.** This is not customer onboarding. Reference internal pages, don't re-teach.
+- **Don't include screenshots of yet-to-be-built UI.** Use words.
+- **Don't write fluff** ("Welcome to the wiki!"). Get to the point.
+- **Don't argue with yourself in the doc.** Make a decision; if it's wrong, change it later. ADRs are for documenting why.
+
+## Spell-check
+
+`cspell.json` at the repo root has the project word list. Add new technical terms there rather than in `<!-- spellchecker: disable -->` comments.
+
+## When in doubt
+
+Read three nearby pages and match their voice. If the rules above conflict, pick the rule that produces shorter prose.

@@ -1,0 +1,19 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Nextra",
+    "MDX",
+    "mermaid",
+    "pnpm",
+    "ADR",
+    "ADRs",
+    "frontmatter",
+    "metadataBase",
+    "Turbopack",
+    "Pagefind",
+    "Shiki",
+    "nextjs"
+  ],
+  "ignorePaths": ["node_modules/**", ".next/**", "pnpm-lock.yaml"]
+}

@@ -1,0 +1,6 @@
+allowBuilds:
+  sharp: false
+# Nextra 4.6.1 breaks on zod >= 4.4 ("expected nonoptional" validation errors).
+# Pin zod here — pnpm 11 ignores the `pnpm.overrides` field in package.json.
+overrides:
+  zod: 4.1.12

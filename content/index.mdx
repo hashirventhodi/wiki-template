@@ -1,0 +1,31 @@
+---
+title: Project Wiki
+description: Internal product wiki — vision, product spec, architecture, decisions, business, and roadmap. Replace this with a one-line description of your project.
+status: draft
+---
+
+# Project Wiki <StatusBadge status="draft" />
+
+Internal source of truth for **PROJECT_NAME** — one sentence on what it is and who it's for. Replace this paragraph, then start filling in the sections below.
+
+> **Internal — do not share.** This site is not customer documentation. Voice is terse, decision-oriented, and incomplete by design. See the [Style Guide](/operations/style-guide).
+
+## What's where
+
+| Section | What lives here |
+|---|---|
+| [Vision](/vision/overview) | What this is, who it's for, why it exists |
+| [Product](/product/overview) | The spec — features, surfaces, tiers |
+| [Architecture](/architecture/overview) | How it works — system design, data model, flows |
+| [Decisions](/decisions/0001-example-decision) | ADRs — every architectural and product decision with context |
+| [Business](/business/overview) | Pricing, validation, GTM, risks |
+| [Roadmap](/roadmap/index) | Near-term plan and post-launch direction |
+| [Operations](/operations/open-questions) | Open questions, glossary, style guide |
+
+## Using this template
+
+1. Search-replace `PROJECT_NAME` and `Project` / `Project Wiki` across `content/` and `app/layout.tsx`.
+2. Update branding (`SITE_NAME`, `ORG_NAME`, `REPO_URL`) in `app/layout.tsx`.
+3. Replace each stub page under `content/` with real content. Keep the domain folders you need; delete the rest (remember to update the parent `_meta.ts`).
+4. Read the [Style Guide](/operations/style-guide) before writing — it captures the voice and the MDX/Mermaid gotchas.
+5. Delete this "Using this template" section once you're underway.
