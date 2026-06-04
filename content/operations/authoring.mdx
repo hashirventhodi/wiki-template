@@ -31,7 +31,8 @@ ADRs record decisions. Copy `templates/adr.mdx` into `content/decisions/`, named
 
 This wiki is built to be read by coding agents working on the product.
 
-- **Consume it** in-repo by reading `content/**/*.mdx`, or over HTTP via [`/llms.txt`](/llms.txt) (index) and [`/llms-full.txt`](/llms-full.txt) (full corpus). Both regenerate from content automatically — never hand-edit them.
+- **Consume it** in-repo by reading `content/**/*.mdx`, or over HTTP via [`/llms.txt`](/llms.txt) (index), [`/llms-full.txt`](/llms-full.txt) (full corpus), or by appending `.md` to any page URL for that single page as clean Markdown. All regenerate from content automatically — never hand-edit them.
+- **Validate** before committing: `pnpm validate` checks frontmatter and internal links; `pnpm build` runs it automatically. Broken links and malformed pages fail the build.
 - **Author with it.** A prompt that produces a conformant page:
 
   ```text

@@ -19,18 +19,23 @@ This template is designed so coding agents can both **read** the wiki as project
 
 - **`AGENTS.md`** is the canonical agent instruction file (the cross-tool standard read by Codex, Copilot, Cursor, Claude Code, and others). `CLAUDE.md`, `.github/copilot-instructions.md`, and `.cursor/rules/wiki.mdc` are thin pointers to it — one source of truth, no drift.
 - **`/llms.txt`** (curated index) and **`/llms-full.txt`** (full corpus) are generated from `content/` at build time via route handlers (`app/llms.txt/route.ts`, `lib/wiki.ts`), following the [llms.txt](https://llmstxt.org/) convention. They never go stale and need no manual upkeep.
-- **`templates/`** holds copy-paste skeletons (`page.mdx`, `adr.mdx`) so agents generate conformant pages.
+- **Per-page Markdown**: append `.md` to any page URL (e.g. `/architecture/conventions.md`) to get clean Markdown instead of HTML — the convention used by Mintlify and the Next.js docs. Generated into `public/` by `scripts/generate-md.mjs`.
+- **`templates/`** holds copy-paste skeletons (`page.mdx`, `adr.mdx`, MADR-format) so agents generate conformant pages.
+- **Validation** (`scripts/validate-content.mjs`) enforces frontmatter, a controlled `status` vocabulary, and resolvable internal links — so agent-authored pages can't drift.
 
 ## Commands
 
 ```bash
 pnpm install   # install deps (Node 20+)
 pnpm dev       # local site at http://localhost:3000
-pnpm build     # production build — the de facto test (catches MDX, frontmatter, route, Mermaid errors)
+pnpm validate  # check frontmatter + internal links across content/
+pnpm build     # production build — catches MDX, route, and Mermaid errors
 pnpm start     # serve production build
 ```
 
-There is no automated test suite. Run `pnpm build` before opening a PR.
+`pnpm build` runs `validate` and regenerates the per-page Markdown mirrors first
+(via the `prebuild` step), so a broken link or malformed page fails the build. CI
+runs the same gate on every push and PR (`.github/workflows/ci.yml`).
 
 ## Structure
 
@@ -44,8 +49,10 @@ There is no automated test suite. Run `pnpm build` before opening a PR.
 | `content/roadmap/` | Near-term and post-launch plans |
 | `content/operations/` | Open questions, glossary, style guide, authoring |
 | `site.config.ts` | Branding — the only file to edit when rebranding |
-| `app/`, `components/`, `lib/` | App Router shell, shared MDX UI, llms.txt generation |
+| `app/`, `components/`, `lib/` | App Router shell, shared MDX UI, llms.txt + Markdown generation |
+| `scripts/` | `validate-content.mjs`, `generate-md.mjs` (run via npm lifecycle hooks) |
 | `templates/` | Copy-paste skeletons for new pages and ADRs |
+| `.github/workflows/` | CI: validate + build on every push/PR |
 
 ## How it works
 
@@ -53,7 +60,8 @@ There is no automated test suite. Run `pnpm build` before opening a PR.
 - `mdx-components.tsx` exposes `<StatusBadge>` and `<Decision>` to every MDX file without import.
 - `content/_meta.ts` and per-directory `_meta.ts` files control sidebar order and titles.
 - Mermaid diagrams render in fenced ` ```mermaid ` blocks.
-- `lib/wiki.ts` builds `/llms.txt` and `/llms-full.txt` from the Nextra page map.
+- `lib/wiki.ts` builds `/llms.txt` and `/llms-full.txt` from the Nextra page map; `scripts/generate-md.mjs` writes per-page `.md` mirrors into `public/`. Both reuse `lib/content-utils.mjs`.
+- `scripts/validate-content.mjs` runs in `prebuild` and CI — malformed frontmatter or broken internal links fail the build.
 - Spell-check uses `cspell.json` — add project terms there.
 
 ## Running locally vs deploying

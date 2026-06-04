@@ -12,12 +12,13 @@ React 19, MDX content under `content/`. Not customer-facing.
 ```bash
 pnpm install        # Node 20+
 pnpm dev            # local site at http://localhost:3000
-pnpm build          # the de facto test — catches MDX, frontmatter, route, and Mermaid errors
+pnpm validate       # check frontmatter + internal links across content/
+pnpm build          # full build — runs validate, then catches MDX, route, and Mermaid errors
 pnpm start          # serve the production build
 ```
 
-There is no unit-test suite. **`pnpm build` is the validation gate** — run it before
-committing any content or code change.
+There is no unit-test suite. **`pnpm build` is the validation gate** (it runs `validate`
+first) — run it before committing any content or code change.
 
 ## Project structure
 
@@ -29,11 +30,14 @@ app/                       Next.js App Router shell
   llms.txt/route.ts        Generates /llms.txt   (index)        — do not hand-edit output
   llms-full.txt/route.ts   Generates /llms-full.txt (full text) — do not hand-edit output
 lib/wiki.ts                Builds the llms.txt views from the Nextra page map
+lib/content-utils.mjs      Shared MDX→Markdown + frontmatter helpers (used by lib + scripts)
+scripts/validate-content.mjs  Frontmatter + internal-link validation (prebuild + CI)
+scripts/generate-md.mjs    Writes per-page .md mirrors into public/ (prebuild + predev)
 components/                StatusBadge, Decision — auto-injected into MDX (no import needed)
 content/                   The wiki. Domain folders, each with an _meta.ts:
   vision/ product/ architecture/ decisions/ business/ roadmap/ operations/
   _meta.ts                 Top-level sidebar order
-templates/                 Copy-paste skeletons for new pages and ADRs
+templates/                 Copy-paste skeletons for new pages and ADRs (MADR format)
 ```
 
 ## Conventions
@@ -68,7 +72,9 @@ This wiki is meant to ground other agents working on the actual product. To load
 
 - In-repo: read `content/**/*.mdx`. Each page's frontmatter gives `title`,
   `description`, `status`.
-- Over HTTP: fetch `/llms.txt` for the index, `/llms-full.txt` for the full corpus.
+- Over HTTP: fetch `/llms.txt` for the index, `/llms-full.txt` for the full corpus,
+  or append `.md` to any page URL (e.g. `/architecture/conventions.md`) for that one
+  page as clean Markdown.
 
 Suggested read order: `vision/` → `product/` → `architecture/` → `decisions/`. For code
 generation specifically, the highest-signal pages are `architecture/conventions`,

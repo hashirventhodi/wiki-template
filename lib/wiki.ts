@@ -10,6 +10,7 @@ import path from 'node:path'
 import { getPageMap } from 'nextra/page-map'
 import { normalizePages } from 'nextra/normalize-pages'
 import { site } from '@/site.config'
+import { mdxToMarkdown, stripLeadingH1 } from './content-utils.mjs'
 
 const CONTENT_DIR = path.join(process.cwd(), 'content')
 
@@ -59,17 +60,6 @@ async function resolveContentPath(route: string): Promise<string | null> {
     }
   }
   return null
-}
-
-/** Strip a leading YAML frontmatter block. */
-function stripFrontmatter(src: string): string {
-  const match = src.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/)
-  return match ? src.slice(match[0].length) : src
-}
-
-/** Strip a leading `# Heading` line (the page's own H1, often carrying JSX like <StatusBadge>). */
-function stripLeadingH1(md: string): string {
-  return md.replace(/^\s*#\s+.*(?:\r?\n)+/, '')
 }
 
 const header = (note: string): string[] => [
@@ -127,7 +117,7 @@ export async function generateLlmsFullTxt(): Promise<string> {
     const filePath = await resolveContentPath(page.route)
     if (!filePath) continue
     const raw = await fs.readFile(filePath, 'utf8')
-    const body = stripLeadingH1(stripFrontmatter(raw)).trim()
+    const body = stripLeadingH1(mdxToMarkdown(raw)).trim()
     lines.push(`# ${titleOf(page)}`, `Source: ${absoluteUrl(page.route)}`, '', body, '', '---', '')
   }
 

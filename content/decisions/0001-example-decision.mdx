@@ -1,6 +1,6 @@
 ---
 title: ADR-0001 Example Decision
-description: Template ADR — copy this file to start a new architecture decision record.
+description: Template ADR in MADR format — copy this file to start a new architecture decision record.
 status: draft
 ---
 
@@ -9,39 +9,45 @@ status: draft
 <Decision id="0001" date="YYYY-MM-DD" status="proposed" />
 
 > Copy this file to `NNNN-short-title.mdx` (zero-padded, kebab-case) to record a new
-> decision. Add it to `decisions/_meta.ts`. Delete this blockquote.
+> decision, and add it to `decisions/_meta.ts`. This follows the
+> [MADR](https://adr.github.io/madr/) format. Delete this blockquote.
 
-## Context
+## Context and problem statement
 
-What forces are at play? What constraints, requirements, or problems make this decision necessary? Be concrete.
+What forces are at play, and what problem requires a decision? Be concrete — constraints,
+requirements, and what breaks if we don't choose.
 
-## Decision
+## Decision drivers
 
-What we decided, stated plainly in one or two sentences.
+- A criterion that matters (e.g. time-to-ship, operability, cost).
+- Another criterion.
 
-## Consequences
+## Considered options
 
-### Pros
+1. **Option A**
+2. **Option B**
+3. **Option C**
 
-- What this buys us.
+## Decision outcome
 
-### Cons
+Chosen option: **Option A**, because it best satisfies the drivers above.
 
-- What it costs us / locks us into.
+### Consequences
 
-## Alternatives considered
+- Good — what this buys us.
+- Bad — what it costs or locks us into.
 
-1. **Option B** — why we didn't pick it.
-2. **Option C** — why we didn't pick it.
+### Confirmation
 
-## Implementation
+How we'll verify the decision is implemented and holding (review, test, metric).
 
-What changes, and roughly in what order.
+## Pros and cons of the options
 
-## Status
+**Option A** — good: …; bad: …
+**Option B** — good: …; bad: …
 
-`proposed` → `accepted` once agreed. Once `accepted`, don't edit; supersede with a new ADR instead.
+## More information
 
-## Related
+Once `accepted`, don't edit this ADR — supersede it with a new one that links back. Related:
 
 - TBD

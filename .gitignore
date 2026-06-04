@@ -5,3 +5,7 @@ out
 *.log
 .DS_Store
 .pnpm-store
+
+# Per-page Markdown mirrors generated into public/ by scripts/generate-md.mjs
+/public/**/*.md
+/public/.generated-md.json
