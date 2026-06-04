@@ -2,5 +2,6 @@ export default {
   'open-questions': 'Open Questions',
   glossary: 'Glossary',
   'style-guide': 'Style Guide',
-  authoring: 'Authoring'
+  authoring: 'Authoring',
+  'connect-your-repo': 'Connect Your Repo'
 }

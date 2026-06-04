@@ -23,6 +23,16 @@ This template is designed so coding agents can both **read** the wiki as project
 - **`templates/`** holds copy-paste skeletons (`page.mdx`, `adr.mdx`, MADR-format) so agents generate conformant pages.
 - **Validation** (`scripts/validate-content.mjs`) enforces frontmatter, a controlled `status` vocabulary, and resolvable internal links — so agent-authored pages can't drift.
 
+### Connect your product repo
+
+This wiki documents a product whose code usually lives in a *separate* repo. To make that repo's coding agents read this wiki as context, add a short pointer to its `AGENTS.md` (and `CLAUDE.md`). The ready-to-paste block, filled in with your deployed URL, is generated at **`/connect.md`**:
+
+```bash
+curl https://wiki.yourcompany.com/connect.md   # paste the output into your product repo's AGENTS.md
+```
+
+It follows the proven "fetch `/llms.txt` first, then follow links" pattern. The [Connect Your Repo](content/operations/connect-your-repo.mdx) page also documents Cursor `@Docs` and MCP integration paths.
+
 ## Commands
 
 ```bash

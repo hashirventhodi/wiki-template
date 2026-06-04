@@ -17,7 +17,7 @@ const DESCRIPTION_MIN = 50
 const DESCRIPTION_MAX = 160
 
 // Routes that exist but aren't content pages (generated route handlers / assets).
-const EXTRA_ROUTES = new Set(['/llms.txt', '/llms-full.txt'])
+const EXTRA_ROUTES = new Set(['/llms.txt', '/llms-full.txt', '/connect.md'])
 
 /** @type {string[]} */
 const errors = []

@@ -27,8 +27,12 @@ Internal source of truth for **PROJECT_NAME** — one sentence on what it is and
 1. Edit `site.config.ts` — it's the single source of branding (name, org, description, url, repo).
 2. Replace `PROJECT_NAME` in this page with your project, then replace each stub page under `content/` with real content. Keep the domain folders you need; delete the rest (update the parent `_meta.ts`).
 3. Read the [Style Guide](/operations/style-guide) and [Authoring](/operations/authoring) before writing — they capture the voice, the MDX/Mermaid gotchas, and the page workflow.
-4. Delete this "Using this template" section once you're underway.
+4. **Connect your product repo** — once this wiki is deployed, point your *code* repo's agents at it so they build from this context. Follow [Connect Your Repo](/operations/connect-your-repo). (Don't skip this — it's the payoff.)
+5. Delete this "Using this template" section once you're underway.
 
 ## For AI agents
 
-This wiki is built to be read and edited by coding agents. Agent guidance lives in `AGENTS.md` (the canonical file; `CLAUDE.md`, `.github/copilot-instructions.md`, and `.cursor/rules/` defer to it). The content is exposed for LLMs at [`/llms.txt`](/llms.txt) (index) and [`/llms-full.txt`](/llms-full.txt) (full text), both generated from `content/` automatically. See [Authoring → For AI agents](/operations/authoring).
+This wiki is built to be read and edited by coding agents. Two directions:
+
+- **Working in *this* repo** (editing the wiki): guidance lives in `AGENTS.md` (the canonical file; `CLAUDE.md`, `.github/copilot-instructions.md`, and `.cursor/rules/` defer to it). Content is exposed at [`/llms.txt`](/llms.txt) (index) and [`/llms-full.txt`](/llms-full.txt) (full text), generated from `content/` automatically. See [Authoring → For AI agents](/operations/authoring).
+- **Working in your *product* repo** (writing the code this wiki describes): point those agents here. Copy the ready-made pointer from [`/connect.md`](/connect.md) into the product repo's `AGENTS.md`. See [Connect Your Repo](/operations/connect-your-repo).

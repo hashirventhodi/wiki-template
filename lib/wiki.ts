@@ -71,6 +71,39 @@ const header = (note: string): string[] => [
   ''
 ]
 
+/**
+ * The pointer block to paste into a *product* repo's AGENTS.md / CLAUDE.md, so
+ * coding agents working on that codebase read this wiki as their source of truth.
+ * Filled in with the live wiki name and URL; served at /connect.md.
+ */
+export function generateConnectSnippet(): string {
+  const url = site.url.replace(/\/$/, '')
+  const keyPages: ReadonlyArray<readonly [string, string]> = [
+    ['/architecture/conventions.md', 'how we write code here'],
+    ['/architecture/tech-stack.md', 'the stack, and what to avoid'],
+    ['/architecture/data-model.md', 'entities and invariants'],
+    ['/architecture/api.md', 'interfaces and contracts'],
+    ['/product/non-goals.md', 'out of scope and hard constraints']
+  ]
+  return [
+    '## Project knowledge base',
+    '',
+    `Architecture, decisions, conventions, and product context live in the ${site.name}:`,
+    url,
+    '',
+    'Start here, then follow links for depth:',
+    `- ${url}/llms.txt — index of every page (fetch this first)`,
+    `- ${url}/llms-full.txt — the entire wiki as one document`,
+    '- Append `.md` to any page URL for that page as clean Markdown',
+    '',
+    'Read before writing code, especially:',
+    ...keyPages.map(([p, note]) => `- ${url}${p} — ${note}`),
+    '',
+    `Treat the ADRs under ${url}/decisions/ and ${url}/product/non-goals as binding.`,
+    ''
+  ].join('\n')
+}
+
 /** Curated index: H1 + summary + one section per top-level folder, with page links. */
 export async function generateLlmsTxt(): Promise<string> {
   const { docsDirectories, flatDocsDirectories } = await getNormalized()

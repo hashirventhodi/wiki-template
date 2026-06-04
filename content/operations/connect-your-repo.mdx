@@ -1,0 +1,31 @@
+---
+title: Connect Your Repo
+description: "How to point your product repo's coding agents at this wiki so they build from current context."
+status: stable
+---
+
+# Connect Your Repo <StatusBadge status="stable" />
+
+This wiki documents a product whose code usually lives in a **separate repository**. Point that repo's coding agents here so they build from current architecture, decisions, and conventions instead of guessing.
+
+The principle: keep the knowledge in one place (here) and have the code repo **reference** it. No copy-paste, no drift.
+
+## 1. Add a pointer to AGENTS.md (works everywhere)
+
+`AGENTS.md` is the cross-tool standard read by Codex, Copilot, Cursor, Claude Code, and others. Add a short "knowledge base" section to your product repo's `AGENTS.md`.
+
+The ready-to-paste block — already filled in with this wiki's live URL — is served at [`/connect.md`](/connect.md). Copy it from there. It tells agents to fetch [`/llms.txt`](/llms.txt) first, then follow links for depth.
+
+## 2. Cursor — add the wiki as a Doc source
+
+In Cursor, open **@Docs → Add new doc** and point it at `<wiki-url>/llms.txt`. Cursor indexes the linked pages; reference them in chat with `@Docs`.
+
+## 3. Claude Code — reference the URL
+
+Claude Code fetches URLs on demand, so the [`/connect.md`](/connect.md) block works in `CLAUDE.md` too (or have `CLAUDE.md` point to `AGENTS.md`). Claude reads `/llms.txt` and the per-page `.md` files as it needs them.
+
+## 4. MCP (optional) — expose the wiki as a tool
+
+For repos that prefer tool-based retrieval, serve the wiki through an MCP server so agents query it directly. Because the wiki publishes `/llms.txt`, `/llms-full.txt`, and per-page `.md`, repo-aware MCP bridges (e.g. GitMCP for a public GitHub repo) can expose it with no extra build.
+
+→ [Authoring](/operations/authoring) · [Style Guide](/operations/style-guide)
