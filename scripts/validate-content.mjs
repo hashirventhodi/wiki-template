@@ -8,7 +8,7 @@
  */
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
-import { parseFrontmatter, splitFrontmatter } from '../lib/content-utils.mjs'
+import { parseContent } from '../lib/content-utils.mjs'
 
 const ROOT = process.cwd()
 const CONTENT_DIR = path.join(ROOT, 'content')
@@ -53,20 +53,24 @@ async function main() {
   for (const file of files) {
     const rel = path.relative(ROOT, file)
     const raw = await fs.readFile(file, 'utf8')
-    const data = parseFrontmatter(raw)
-    const { body } = splitFrontmatter(raw)
+    const { data, body } = parseContent(raw)
 
-    // Frontmatter.
-    if (!data.title) errors.push(`${rel}: missing frontmatter "title"`)
-    if (!data.description) {
-      errors.push(`${rel}: missing frontmatter "description"`)
+    // Frontmatter (gray-matter yields native YAML types, so check the type too).
+    if (typeof data.title !== 'string' || !data.title.trim()) {
+      errors.push(`${rel}: missing or non-string frontmatter "title"`)
+    }
+    if (typeof data.description !== 'string' || !data.description.trim()) {
+      errors.push(`${rel}: missing or non-string frontmatter "description"`)
     } else if (data.description.length < DESCRIPTION_MIN || data.description.length > DESCRIPTION_MAX) {
       warnings.push(
         `${rel}: description is ${data.description.length} chars (aim for ${DESCRIPTION_MIN}–${DESCRIPTION_MAX})`
       )
     }
-    if (!data.status) warnings.push(`${rel}: no "status" — prefer one of ${[...VALID_STATUS].join(', ')}`)
-    else if (!VALID_STATUS.has(data.status)) errors.push(`${rel}: invalid status "${data.status}"`)
+    if (data.status === undefined) {
+      warnings.push(`${rel}: no "status" — prefer one of ${[...VALID_STATUS].join(', ')}`)
+    } else if (typeof data.status !== 'string' || !VALID_STATUS.has(data.status)) {
+      errors.push(`${rel}: invalid status "${String(data.status)}"`)
+    }
 
     // Structure.
     if (!/^#\s+\S/m.test(body)) errors.push(`${rel}: no H1 (a line starting with "# ")`)
