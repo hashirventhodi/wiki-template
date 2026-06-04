@@ -1,0 +1,47 @@
+---
+title: Authoring
+description: How to add pages and ADRs to this wiki — for humans and AI agents.
+status: stable
+---
+
+# Authoring <StatusBadge status="stable" />
+
+How to add and change content. The conventions themselves are in the [Style Guide](/operations/style-guide); this page is the mechanical workflow.
+
+## Add a page
+
+1. Copy `templates/page.mdx` into the right `content/<domain>/` folder, named kebab-case (`pricing-model.mdx`).
+2. Fill in the frontmatter (`title`, `description`, and a `status`) and the `<StatusBadge>` on the H1.
+3. Add the file to that folder's `_meta.ts` so it appears in the sidebar in the order you want:
+
+   ```ts
+   export default {
+     overview: 'Overview',
+     'pricing-model': 'Pricing Model'
+   }
+   ```
+
+4. Run `pnpm build`, then reload the page in `pnpm dev`.
+
+## Add an ADR
+
+ADRs record decisions. Copy `templates/adr.mdx` into `content/decisions/`, named `NNNN-short-title.mdx` with the next free zero-padded number, and add it to `content/decisions/_meta.ts`. Once an ADR is `accepted`, don't edit it — supersede it with a new ADR that links back.
+
+## For AI agents
+
+This wiki is built to be read by coding agents working on the product.
+
+- **Consume it** in-repo by reading `content/**/*.mdx`, or over HTTP via [`/llms.txt`](/llms.txt) (index) and [`/llms-full.txt`](/llms-full.txt) (full corpus). Both regenerate from content automatically — never hand-edit them.
+- **Author with it.** A prompt that produces a conformant page:
+
+  ```text
+  Write a new wiki page for content/<domain>/<name>.mdx using templates/page.mdx.
+  Follow content/operations/style-guide.mdx: one H1 with <StatusBadge>, required
+  title/description frontmatter, absolute internal links, Mermaid for flows ≥3 steps,
+  terse internal voice. Then add the page to the folder's _meta.ts and stop — I'll run
+  pnpm build.
+  ```
+
+- Agent guidance is maintained in `AGENTS.md` (with `CLAUDE.md`, `.github/copilot-instructions.md`, and `.cursor/rules/` deferring to it).
+
+→ [Style Guide](/operations/style-guide) · [Open Questions](/operations/open-questions)

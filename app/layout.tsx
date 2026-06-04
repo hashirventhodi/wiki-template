@@ -4,31 +4,27 @@ import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Banner } from 'nextra/components'
 import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+import { site } from '@/site.config'
 import 'nextra-theme-docs/style.css'
 import './global.css'
 
-// ─── Branding ──────────────────────────────────────────────────────────────
-// Replace these with your project's name when you generate from this template.
-const SITE_NAME = 'Project Wiki'
-const ORG_NAME = 'Project'
-const REPO_URL = 'https://github.com/OWNER/REPO/tree/main'
-// ─────────────────────────────────────────────────────────────────────────────
+// All branding lives in site.config.ts — edit it there, not here.
 
 export const metadata: Metadata = {
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL(site.url),
   title: {
-    default: SITE_NAME,
-    template: `%s – ${SITE_NAME}`
+    default: site.name,
+    template: `%s – ${site.name}`
   },
-  description: `${ORG_NAME} internal wiki`,
+  description: site.description,
   robots: {
     index: false,
     follow: false
   }
 }
 
-const navbar = <Navbar logo={<b>{ORG_NAME}</b>} />
-const footer = <Footer>{ORG_NAME} internal wiki · {new Date().getFullYear()}</Footer>
+const navbar = <Navbar logo={<b>{site.org}</b>} />
+const footer = <Footer>{site.org} internal wiki · {new Date().getFullYear()}</Footer>
 const banner = <Banner storageKey="internal-banner">Internal — do not share.</Banner>
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -41,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           navbar={navbar}
           footer={footer}
           pageMap={await getPageMap()}
-          docsRepositoryBase={REPO_URL}
+          docsRepositoryBase={site.repoUrl}
           editLink={null}
         >
           {children}

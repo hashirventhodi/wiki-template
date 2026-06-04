@@ -1,0 +1,19 @@
+---
+description: Conventions for this Nextra MDX wiki — defers to AGENTS.md
+globs: content/**/*.mdx,content/**/_meta.ts,lib/wiki.ts,site.config.ts
+alwaysApply: false
+---
+
+The canonical guidance is in `AGENTS.md` at the repo root. Read it for the full
+workflow. When editing files matched by this rule:
+
+- One `#` H1 per page; frontmatter needs `title` + `description`, prefer `status`, and put
+  `<StatusBadge status="…" />` next to the H1. `<StatusBadge>` and `<Decision>` are
+  auto-injected — no import.
+- File names are kebab-case `.mdx`; ADRs are zero-padded (`0001-…`). Copy skeletons from
+  `templates/`.
+- Internal links are absolute (`/product/overview`), never relative.
+- Add new pages to the folder's `_meta.ts` so they appear in the sidebar.
+- Mermaid for flows ≥3 steps; mind the gotchas in `content/operations/style-guide.mdx`.
+- `pnpm build` is the validation gate. Never hand-edit the generated `/llms.txt` or
+  `/llms-full.txt`.

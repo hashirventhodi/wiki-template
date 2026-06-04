@@ -1,5 +1,6 @@
 export default {
   'open-questions': 'Open Questions',
   glossary: 'Glossary',
-  'style-guide': 'Style Guide'
+  'style-guide': 'Style Guide',
+  authoring: 'Authoring'
 }

@@ -13,7 +13,10 @@
     "Turbopack",
     "Pagefind",
     "Shiki",
-    "nextjs"
+    "nextjs",
+    "llmstxt",
+    "Codex",
+    "Aider"
   ],
-  "ignorePaths": ["node_modules/**", ".next/**", "pnpm-lock.yaml"]
+  "ignorePaths": ["node_modules/**", ".next/**", "pnpm-lock.yaml", "templates/**"]
 }

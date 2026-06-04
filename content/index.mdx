@@ -24,8 +24,11 @@ Internal source of truth for **PROJECT_NAME** — one sentence on what it is and
 
 ## Using this template
 
-1. Search-replace `PROJECT_NAME` and `Project` / `Project Wiki` across `content/` and `app/layout.tsx`.
-2. Update branding (`SITE_NAME`, `ORG_NAME`, `REPO_URL`) in `app/layout.tsx`.
-3. Replace each stub page under `content/` with real content. Keep the domain folders you need; delete the rest (remember to update the parent `_meta.ts`).
-4. Read the [Style Guide](/operations/style-guide) before writing — it captures the voice and the MDX/Mermaid gotchas.
-5. Delete this "Using this template" section once you're underway.
+1. Edit `site.config.ts` — it's the single source of branding (name, org, description, url, repo).
+2. Replace `PROJECT_NAME` in this page with your project, then replace each stub page under `content/` with real content. Keep the domain folders you need; delete the rest (update the parent `_meta.ts`).
+3. Read the [Style Guide](/operations/style-guide) and [Authoring](/operations/authoring) before writing — they capture the voice, the MDX/Mermaid gotchas, and the page workflow.
+4. Delete this "Using this template" section once you're underway.
+
+## For AI agents
+
+This wiki is built to be read and edited by coding agents. Agent guidance lives in `AGENTS.md` (the canonical file; `CLAUDE.md`, `.github/copilot-instructions.md`, and `.cursor/rules/` defer to it). The content is exposed for LLMs at [`/llms.txt`](/llms.txt) (index) and [`/llms-full.txt`](/llms-full.txt) (full text), both generated from `content/` automatically. See [Authoring → For AI agents](/operations/authoring).
