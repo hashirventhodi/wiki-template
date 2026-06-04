@@ -47,4 +47,4 @@ There is no automated test suite. Run `pnpm build` before opening a PR.
 
 ## License
 
-No license file is included — add your own. The original pattern is intended for internal/private use.
+[MIT](LICENSE) — use it for anything, including the wikis you generate from it.
