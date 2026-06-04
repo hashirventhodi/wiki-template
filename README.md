@@ -8,7 +8,7 @@ A starter for an **internal product wiki** — vision, product spec, architectur
 
 Click **"Use this template"** on GitHub, then:
 
-1. `pnpm install` (Node.js 20+).
+1. `pnpm install` (Node.js 22+).
 2. Edit `site.config.ts` — the single source of branding (name, org, description, url, repo).
 3. `pnpm dev` → http://localhost:3000.
 4. Replace the stub pages under `content/` (copy skeletons from `templates/`). Read `content/operations/style-guide.mdx` and `content/operations/authoring.mdx` first.
@@ -26,7 +26,7 @@ This template is designed so coding agents can both **read** the wiki as project
 ## Commands
 
 ```bash
-pnpm install   # install deps (Node 20+)
+pnpm install   # install deps (Node 22+)
 pnpm dev       # local site at http://localhost:3000
 pnpm validate  # check frontmatter + internal links across content/
 pnpm build     # production build — catches MDX, route, and Mermaid errors

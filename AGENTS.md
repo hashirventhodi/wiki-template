@@ -10,7 +10,7 @@ React 19, MDX content under `content/`. Not customer-facing.
 ## Commands
 
 ```bash
-pnpm install        # Node 20+
+pnpm install        # Node 22+
 pnpm dev            # local site at http://localhost:3000
 pnpm validate       # check frontmatter + internal links across content/
 pnpm build          # full build — runs validate, then catches MDX, route, and Mermaid errors
