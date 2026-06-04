@@ -56,6 +56,35 @@ There is no automated test suite. Run `pnpm build` before opening a PR.
 - `lib/wiki.ts` builds `/llms.txt` and `/llms-full.txt` from the Nextra page map.
 - Spell-check uses `cspell.json` — add project terms there.
 
+## Running locally vs deploying
+
+The only environment-specific value is the **public URL**, used for page metadata and the
+absolute links in `/llms.txt` and `/llms-full.txt`. It's resolved in `site.config.ts` in
+this order: `NEXT_PUBLIC_SITE_URL` → Vercel's `VERCEL_PROJECT_PRODUCTION_URL` → `http://localhost:3000`.
+
+**Local** — nothing to configure:
+
+```bash
+pnpm dev      # http://localhost:3000
+```
+
+**Deploy** — set the canonical URL so links resolve correctly:
+
+```bash
+# Any host (Docker, a VPS, CI): set it in the build/runtime environment
+NEXT_PUBLIC_SITE_URL=https://wiki.yourcompany.com pnpm build && pnpm start
+```
+
+- **Vercel**: no config needed — `VERCEL_PROJECT_PRODUCTION_URL` is auto-detected. Set
+  `NEXT_PUBLIC_SITE_URL` only if you serve from a custom domain you want as canonical.
+- The URL is read at **build time** (the llms routes are statically generated), so set it
+  before `pnpm build` and rebuild after changing it.
+- See `.env.example`. For local overrides, copy it to `.env.local` (gitignored).
+
+> **Internal-only.** This wiki ships with `robots: noindex` and an "Internal — do not share"
+> banner, but that does not restrict access. **Put it behind auth before exposing it**
+> (Vercel password protection / SSO, a reverse-proxy auth layer, or a private network).
+
 ## License
 
 [MIT](LICENSE) — use it for anything, including the wikis you generate from it.
