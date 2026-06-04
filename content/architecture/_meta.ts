@@ -1,3 +1,7 @@
 export default {
-  overview: 'Overview'
+  overview: 'Overview',
+  'tech-stack': 'Tech Stack',
+  'data-model': 'Data Model',
+  api: 'API & Contracts',
+  conventions: 'Conventions'
 }

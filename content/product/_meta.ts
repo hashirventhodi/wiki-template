@@ -1,3 +1,4 @@
 export default {
-  overview: 'Overview'
+  overview: 'Overview',
+  'non-goals': 'Non-Goals & Constraints'
 }

@@ -70,7 +70,10 @@ This wiki is meant to ground other agents working on the actual product. To load
   `description`, `status`.
 - Over HTTP: fetch `/llms.txt` for the index, `/llms-full.txt` for the full corpus.
 
-Suggested read order: `vision/` → `product/` → `architecture/` → `decisions/`.
+Suggested read order: `vision/` → `product/` → `architecture/` → `decisions/`. For code
+generation specifically, the highest-signal pages are `architecture/conventions`,
+`architecture/tech-stack`, `architecture/data-model`, `architecture/api`, and
+`product/non-goals` — read those before writing code for the product.
 
 ## Boundaries
 

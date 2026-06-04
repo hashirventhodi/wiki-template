@@ -1,0 +1,29 @@
+---
+title: Data Model
+description: Core entities, their relationships, and the invariants any implementation must hold.
+status: stub
+---
+
+# Data Model <StatusBadge status="stub" />
+
+The entities agents must respect when reading or writing data.
+
+```mermaid
+erDiagram
+  USER ||--o{ ORDER : places
+  ORDER ||--|{ LINE_ITEM : contains
+```
+
+## Entities
+
+| Entity | Purpose | Key fields |
+|---|---|---|
+| TBD | — | — |
+
+## Invariants
+
+Rules the data must always satisfy — the kind of thing an agent will violate unless told.
+
+- TBD.
+
+→ [Architecture Overview](/architecture/overview) · [API & Contracts](/architecture/api)
